@@ -48,13 +48,16 @@ on:
   push:
     branches:
     - main
-  pull_request:
 
 jobs:
   terraform:
     name: 'Terraform'
     runs-on: ubuntu-latest
     environment: production
+    
+    # id-tokenの書き込み権限を追加
+    permissions:
+      id-token: write
 
     # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
     defaults:
@@ -71,6 +74,13 @@ jobs:
       uses: hashicorp/setup-terraform@v1
       with:
         cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
+
+    # アクセストークン取得処理追加
+    - name: configure aws credentials # 処理ステップ名
+      uses: aws-actions/configure-aws-credentials@master # パブリックアクションの指定
+      with:
+        role-to-assume: arn:aws:iam::1234567890:role/example-role # IAMロールのARNを指定
+        aws-region: ap-northeast-1 # リージョン名を指定
 
     # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
     - name: Terraform Init
