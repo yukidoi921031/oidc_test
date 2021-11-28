@@ -77,9 +77,9 @@ jobs:
 
     # アクセストークン取得処理追加
     - name: configure aws credentials # 処理ステップ名
-      uses: aws-actions/configure-aws-credentials@master # パブリックアクションの指定
+      uses: aws-actions/configure-aws-credentials@v1 # パブリックアクションの指定
       with:
-        role-to-assume: arn:aws:iam::1234567890:role/example-role # IAMロールのARNを指定
+        role-to-assume: arn:aws:iam::246377351709:role/OIDCTest-Role-1P7WPUE4JUL1F # IAMロールのARNを指定
         aws-region: ap-northeast-1 # リージョン名を指定
 
     # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
